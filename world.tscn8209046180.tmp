@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://jqty0w8m78fg"]
+
+[ext_resource type="Texture2D" uid="uid://cgc71ws1n1hue" path="res://icon.svg" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://2wche2qat0gs" path="res://player.gd" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://bmglggwebekkx" path="res://camera.gd" id="3_tlwt5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gv5m4"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3sb7"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj7yv"]
+albedo_texture = ExtResource("1_f3sb7")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+ground_bottom_color = Color(0.0701346, 0.334096, 0.425078, 1)
+ground_horizon_color = Color(0.35815, 0.748912, 0.506571, 1)
+
+[sub_resource type="Sky" id="Sky_f3sb7"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_f3sb7"]
+background_mode = 2
+sky = SubResource("Sky_f3sb7")
+tonemap_mode = 3
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fj7yv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f3sb7"]
+
+[node name="World" type="Node3D"]
+
+[node name="BigFloor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BigFloor"]
+shape = SubResource("BoxShape3D_gv5m4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BigFloor"]
+mesh = SubResource("BoxMesh_f3sb7")
+surface_material_override/0 = SubResource("StandardMaterial3D_fj7yv")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f3sb7")
+
+[node name="Player" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.20114, 0)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_fj7yv")
+script = ExtResource("2_fj7yv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.900713, 0)
+shape = SubResource("CapsuleShape3D_f3sb7")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("3_tlwt5")
