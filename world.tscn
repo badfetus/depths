@@ -1,13 +1,16 @@
-[gd_scene load_steps=39 format=3 uid="uid://jqty0w8m78fg"]
+[gd_scene load_steps=43 format=3 uid="uid://jqty0w8m78fg"]
 
 [ext_resource type="Script" uid="uid://cai1ouiha174i" path="res://world.gd" id="1_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://kd80yqdkkwnr" path="res://FloorWhite.png" id="2_aqk2v"]
 [ext_resource type="Script" uid="uid://2wche2qat0gs" path="res://player.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://bmglggwebekkx" path="res://camera.gd" id="3_tlwt5"]
 [ext_resource type="Texture2D" uid="uid://crj6usctsdlsu" path="res://FloorGreen.png" id="5_036b0"]
+[ext_resource type="Script" uid="uid://bvvftpc78hfbq" path="res://control.gd" id="5_ioo17"]
 [ext_resource type="Texture2D" uid="uid://cws287i0klq7n" path="res://FloorYellow.png" id="6_dwbse"]
+[ext_resource type="AudioStream" uid="uid://dp3dfllqqmayk" path="res://sounds/Jump.wav" id="6_wse8f"]
 [ext_resource type="Texture2D" uid="uid://b4nlmpn1g5usg" path="res://FloorIce.png" id="7_pkg7o"]
 [ext_resource type="Texture2D" uid="uid://mog0xd13lidl" path="res://FloorRed.png" id="8_gbfbk"]
+[ext_resource type="AudioStream" uid="uid://diiu0fndtfnhp" path="res://sounds/DepthSong.wav" id="11_ic0uy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gv5m4"]
 size = Vector3(250, 1, 250)
@@ -40,6 +43,9 @@ tonemap_mode = 3
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fj7yv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f3sb7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbfbk"]
+bg_color = Color(0.169245, 0.169245, 0.169245, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_036b0"]
 size = Vector3(10, 1, 10)
@@ -147,6 +153,77 @@ shape = SubResource("CapsuleShape3D_f3sb7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("3_tlwt5")
 
+[node name="Control" type="Control" parent="Player/Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ioo17")
+
+[node name="Label" type="Label" parent="Player/Camera3D/Control"]
+layout_direction = 3
+layout_mode = 0
+offset_top = 318.0
+offset_right = 118.0
+offset_bottom = 406.0
+theme_override_colors/font_color = Color(0.207843, 0.956863, 0.647059, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_gbfbk")
+horizontal_alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player/Camera3D/Control"]
+layout_mode = 0
+offset_left = 383.0
+offset_right = 1280.0
+offset_bottom = 45.0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Player/Camera3D/Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 630.0
+offset_right = 416.0
+offset_bottom = 720.0
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "LMB - Charge Jump
+R - Quick restart
+"
+fit_content = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Player/Camera3D/Control"]
+offset_left = 865.0
+offset_top = 585.0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[right]F - Fullscreen
+O - Decrease sensitivity
+P - Increase sensitivity"
+fit_content = true
+
+[node name="Celebrate" type="RichTextLabel" parent="Player/Camera3D/Control"]
+layout_mode = 0
+offset_right = 1274.0
+offset_bottom = 718.0
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JumpPlayer" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("6_wse8f")
+
 [node name="Zones" type="Node3D" parent="."]
 
 [node name="GreenZone" type="Node3D" parent="Zones"]
@@ -211,13 +288,13 @@ shape = SubResource("BoxShape3D_036b0")
 mesh = SubResource("BoxMesh_dwbse")
 surface_material_override/0 = SubResource("StandardMaterial3D_pkg7o")
 
-[node name="GreenFloor7" type="StaticBody3D" parent="Zones/GreenZone"]
+[node name="CP1" type="StaticBody3D" parent="Zones/GreenZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 30, -145)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/GreenZone/GreenFloor7"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/GreenZone/CP1"]
 shape = SubResource("BoxShape3D_dwbse")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/GreenZone/GreenFloor7"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/GreenZone/CP1"]
 mesh = SubResource("BoxMesh_pkg7o")
 surface_material_override/0 = SubResource("StandardMaterial3D_ioo17")
 
@@ -326,13 +403,13 @@ shape = SubResource("BoxShape3D_036b0")
 mesh = SubResource("BoxMesh_dwbse")
 surface_material_override/0 = SubResource("StandardMaterial3D_gbfbk")
 
-[node name="YellowFloor8" type="StaticBody3D" parent="Zones/Yellow Zone"]
+[node name="CP2" type="StaticBody3D" parent="Zones/Yellow Zone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 45, 115.589)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/Yellow Zone/YellowFloor8"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/Yellow Zone/CP2"]
 shape = SubResource("BoxShape3D_gbfbk")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/Yellow Zone/YellowFloor8"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/Yellow Zone/CP2"]
 mesh = SubResource("BoxMesh_wse8f")
 surface_material_override/0 = SubResource("StandardMaterial3D_gbfbk")
 
@@ -451,13 +528,13 @@ shape = SubResource("BoxShape3D_ioo17")
 mesh = SubResource("BoxMesh_ic0uy")
 surface_material_override/0 = SubResource("StandardMaterial3D_k3n1d")
 
-[node name="RedFloor10" type="StaticBody3D" parent="Zones/RedZone"]
+[node name="CP3" type="StaticBody3D" parent="Zones/RedZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1568, 75, 127.136)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/RedZone/RedFloor10"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/RedZone/CP3"]
 shape = SubResource("BoxShape3D_ic0uy")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/RedZone/RedFloor10"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/RedZone/CP3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_2o6r5")
 surface_material_override/0 = SubResource("StandardMaterial3D_k3n1d")
@@ -563,13 +640,13 @@ shape = SubResource("BoxShape3D_pkg7o")
 mesh = SubResource("BoxMesh_gbfbk")
 surface_material_override/0 = SubResource("StandardMaterial3D_wse8f")
 
-[node name="IceEnd" type="StaticBody3D" parent="Zones/Ice Zone"]
+[node name="CP4" type="StaticBody3D" parent="Zones/Ice Zone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.2726, 50.0573, 58.8911)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/Ice Zone/IceEnd"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zones/Ice Zone/CP4"]
 shape = SubResource("BoxShape3D_wse8f")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/Ice Zone/IceEnd"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/Ice Zone/CP4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_k3n1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_ic0uy")
@@ -577,3 +654,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ic0uy")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, 0.5, -0.5, -500, 500, -500)
 shadow_enabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ic0uy")
+autoplay = true

@@ -2,6 +2,13 @@ extends Node
 
 var times = [float(200000), float(200000), float(200000), float(200000)]
 
+func updateTime(index: int, time: float) -> bool:
+	if(time < times[index]):
+		times[index] = time
+		saveData()
+		return true
+	return false
+
 func saveData():
 	var save_game = FileAccess.open("user://depth_perception.save", FileAccess.WRITE)
 	var dict = {

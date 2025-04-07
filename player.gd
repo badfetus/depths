@@ -7,10 +7,21 @@ var mouseDelta = Vector2()
 var holdDuration = 0
 var jumping = false
 
+var playingJumpSound = false
+var jumpSoundStart = -100
+
+var reached = [false, false, false, false]
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)	
+	connect("body_entered", _on_body_entered)
 
 func _physics_process(delta: float) -> void:
+	if(!jumping and playingJumpSound):
+		if(currTime - jumpSoundStart > 0.1):
+			playingJumpSound = false
+			$JumpPlayer.stop()
+		
 	currTime = currTime + delta
 	if(jumping):
 		holdDuration += delta
@@ -43,6 +54,9 @@ func handleCheats():
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and on_floor:
 		jumping = true
+		$JumpPlayer.play(0.0)
+		jumpSoundStart = currTime
+		playingJumpSound = true
 	elif event is InputEventMouseButton and !event.is_pressed():
 		jumping = false
 
@@ -77,6 +91,13 @@ var on_floor: bool = false # now global!
 var currTime = 0
 var lastTimeOnFloor = -100
 
+func _on_body_entered(body):
+	if(body.name.begins_with("CP")):
+		var index = int(body.name.substr(2)) - 1
+		Global.updateTime(index, currTime)
+		if(!reached[index]):
+			$Camera3D/Control.celebrate(index)
+		
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	on_floor = false
 	
@@ -92,3 +113,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		lastTimeOnFloor = currTime
 	elif (currTime - lastTimeOnFloor < leeway):
 		on_floor = true
+		
+	if(!on_floor):
+		jumping = false
