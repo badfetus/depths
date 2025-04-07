@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		position.z = 0
 		apply_central_impulse(linear_velocity * -1)
 		
-	handleCheats()
+	#handleCheats()
 	
 func handleCheats():
 	if Input.is_action_just_pressed("Cheat"): 
@@ -96,6 +96,7 @@ func _on_body_entered(body):
 		var index = int(body.name.substr(2)) - 1
 		Global.updateTime(index, currTime)
 		if(!reached[index]):
+			reached[index] = true
 			$Camera3D/Control.celebrate(index)
 		
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:

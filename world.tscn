@@ -223,6 +223,7 @@ vertical_alignment = 1
 
 [node name="JumpPlayer" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource("6_wse8f")
+volume_db = 10.0
 
 [node name="Zones" type="Node3D" parent="."]
 
