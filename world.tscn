@@ -198,6 +198,7 @@ R - Quick restart
 fit_content = true
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="Player/Camera3D/Control"]
+layout_mode = 0
 offset_left = 865.0
 offset_top = 585.0
 offset_right = 1280.0
@@ -515,7 +516,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.3419, 50, 118.236)
 shape = SubResource("BoxShape3D_wse8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/RedZone/RedFloor8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_k3n1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_k3n1d")
 
@@ -536,7 +536,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1568, 75, 127.136)
 shape = SubResource("BoxShape3D_ic0uy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/RedZone/CP3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_2o6r5")
 surface_material_override/0 = SubResource("StandardMaterial3D_k3n1d")
 
@@ -648,7 +647,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.2726, 50.0573, 58.8911)
 shape = SubResource("BoxShape3D_wse8f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Zones/Ice Zone/CP4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_k3n1d")
 surface_material_override/0 = SubResource("StandardMaterial3D_ic0uy")
 
